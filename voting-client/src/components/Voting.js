@@ -1,13 +1,15 @@
 import React from 'react';
-var h = require('react-hyperscript');
+import PureRenderMixin from 'react-addons-pure-render-mixin';
+import Winner from './Winner';
+import Vote from './Vote';
 
 export default React.createClass({
-  getPair: function() {
-    return this.props.pair || [];
-  },
+  mixins: [PureRenderMixin],
   render: function() {
-    return h("div.voting", this.getPair().map(entry =>
-        h("button", {key: entry, onClick: () => this.props.vote(entry)},
-          h("h1", entry))))
+    return <div>
+      {this.props.winner ?
+        <Winner ref="winner" winner={this.props.winner} /> :
+        <Vote {...this.props} />}
+    </div>;
   }
 });
